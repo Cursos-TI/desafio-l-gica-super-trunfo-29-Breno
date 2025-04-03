@@ -146,7 +146,7 @@ int main() {
         } else {
         // Se a população dos dois países for igual, ou seja, se pais1.populacao for igual a pais2.populacao
         // A mensagem "Empate" será impressa, indicando que os dois países têm o mesmo número de habitantes
-            printf("1. Comparando Populacao: Empate\n");
+            printf("1 - Comparando Populacao: Empate\n");
         }
     };
 
