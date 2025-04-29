@@ -119,38 +119,76 @@ int main() {
     printf("PIB per Capita: %.2f \n", pibPerCapita2);
     printf("Super Poder 2: %.2f \n",superpoder2);
 
-    printf("\n\n");
+    // Menu Interativo
+    int escolha;
+    printf("\nEscolha o atributo para comparacao:\n");
+    printf("1 - Populacao\n");
+    printf("2 - Area\n");
+    printf("3 - PIB\n");
+    printf("4 - Pontos Turisticos\n");
+    printf("5 - Densidade Demografica (Menor vence!)\n");
+    printf("Escolha: ");
+    scanf("%d", &escolha);
 
-    // Comparação da População e exibição do vencedor
-    printf("Comparando Habitantes:\n\n");
+    printf("\n--- Comparando ---\n");
+    printf("Pais 1: %s", pais1.estado);
+    printf("Pais 2: %s ", pais2.estado);
 
-    /* 0 (Pais 1) 1 (Pais 2)
-    Se pais1 > pais2 for verdadeiro, o valor impresso será 1.
-    Se o valor de pais1 < pais2, o valor impresso será 0*/
+    switch (escolha) {
+        case 1:
+            printf("Populacao - Pais 1: %d, Pais 2: %d\n", pais1.populacao, pais2.populacao);
+            if (pais1.populacao > pais2.populacao)
+                printf("Resultado: Pais 1 venceu!\n");
+            else if (pais1.populacao < pais2.populacao)
+                printf("Resultado: Pais 2 venceu!\n");
+            else
+                printf("Resultado: Empate!\n");
+            break;
 
+        case 2:
+            printf("Area - Pais 1: %.2f, Pais 2: %.2f\n", pais1.area, pais2.area);
+            if (pais1.area > pais2.area)
+                printf("Resultado: Pais 1 venceu!\n");
+            else if (pais1.area < pais2.area)
+                printf("Resultado: Pais 2 venceu!\n");
+            else
+                printf("Resultado: Empate!\n");
+            break;
 
-    // Comparando População
+        case 3:
+            printf("PIB - Pais 1: %.2f, Pais 2: %.2f\n", pais1.pib, pais2.pib);
+            if (pais1.pib > pais2.pib)
+                printf("Resultado: Pais 1 venceu!\n");
+            else if (pais1.pib < pais2.pib)
+                printf("Resultado: Pais 2 venceu!\n");
+            else
+                printf("Resultado: Empate!\n");
+            break;
 
-    if(comparacao == 1){ //Aqui, 1 significa que vamos comparar a População
+        case 4:
+            printf("Pontos Turisticos - Pais 1: %d, Pais 2: %d\n", pais1.pontosTuristicos, pais2.pontosTuristicos);
+            if (pais1.pontosTuristicos > pais2.pontosTuristicos)
+                printf("Resultado: Pais 1 venceu!\n");
+            else if (pais1.pontosTuristicos < pais2.pontosTuristicos)
+                printf("Resultado: Pais 2 venceu!\n");
+            else
+                printf("Resultado: Empate!\n");
+            break;
 
-        if (pais1.populacao > pais2.populacao) {
-        // Se a população do primeiro país (pais1.populacao) for maior que a do segundo país (pais2.populacao)
-        // A mensagem "Pais 1 venceu" será impressa, indicando que o primeiro país tem uma população maior
-            printf("1 - Comparando Habitantes: Pais 1 venceu\n");
+        case 5:
+            printf("Densidade Demografica - Pais 1: %.2f, Pais 2: %.2f\n", densidadePopulacional1, densidadePopulacional2);
+            if (densidadePopulacional1 < densidadePopulacional2)
+                printf("Resultado: Pais 1 venceu! (Menor densidade)\n");
+            else if (densidadePopulacional1 > densidadePopulacional2)
+                printf("Resultado: Pais 2 venceu! (Menor densidade)\n");
+            else
+                printf("Resultado: Empate!\n");
+            break;
 
-        } else if (pais1.populacao < pais2.populacao) {
-        // Caso contrário, se a população do primeiro país (pais1.populacao) for menor que a do segundo país (pais2.populacao)
-        // A mensagem "Pais 2 venceu" será impressa, indicando que o segundo país tem uma população maior
-            printf("1 - Comparando Habitantes: Pais 2 venceu\n");
-
-        } else {
-        // Se a população dos dois países for igual, ou seja, se pais1.populacao for igual a pais2.populacao
-        // A mensagem "Empate" será impressa, indicando que os dois países têm o mesmo número de habitantes
-            printf("1 - Comparando Populacao: Empate\n");
-        }
-    };
-
-
+        default:
+            printf("Opcao invalida!\n");
+            break;
+    }
 
     return 0;
 }
