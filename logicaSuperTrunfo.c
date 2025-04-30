@@ -119,76 +119,112 @@ int main() {
     printf("PIB per Capita: %.2f \n", pibPerCapita2);
     printf("Super Poder 2: %.2f \n",superpoder2);
 
-    // Menu Interativo
-    int escolha;
-    printf("\nEscolha o atributo para comparacao:\n");
+    // Menu interativo para dois atributos
+    int escolha1, escolha2;
+
+    printf("\nEscolha o PRIMEIRO atributo para comparacao:\n");
     printf("1 - Populacao\n");
     printf("2 - Area\n");
     printf("3 - PIB\n");
     printf("4 - Pontos Turisticos\n");
     printf("5 - Densidade Demografica (Menor vence!)\n");
     printf("Escolha: ");
-    scanf("%d", &escolha);
+    scanf("%d", &escolha1);
 
+    // Valida a primeira escolha
+    if (escolha1 < 1 || escolha1 > 5) {
+        printf("Opcao invalida!\n");
+        return 0;
+    }
+
+    // Menu dinâmico para segunda escolha
+    printf("\nEscolha o SEGUNDO atributo para comparacao (diferente do primeiro):\n");
+
+    if (escolha1 != 1) printf("1 - Populacao\n");
+    if (escolha1 != 2) printf("2 - Area\n");
+    if (escolha1 != 3) printf("3 - PIB\n");
+    if (escolha1 != 4) printf("4 - Pontos Turisticos\n");
+    if (escolha1 != 5) printf("5 - Densidade Demografica (Menor vence!)\n");
+
+    printf("Escolha: ");
+    scanf("%d", &escolha2);
+
+    // Validação permanece igual
+    if (escolha2 < 1 || escolha2 > 5 || escolha2 == escolha1) {
+        printf("Opcao invalida ou repetida!\n");
+        return 0;
+    }
+
+    // Função auxiliar para obter valor de atributo
+    float obterValor(struct Pais p, int atributo, float densidade, float pibPerCapita) {
+        switch (atributo) {
+            case 1: return p.populacao;
+            case 2: return p.area;
+            case 3: return p.pib;
+            case 4: return p.pontosTuristicos;
+            case 5: return densidade; // Menor vence, A densidade não está no struct Pais, então ela precisa ser passada separadamente. Por isso, no case 5, retorna densidade
+            default: return 0;
+        }
+    }
+
+    // Obtem os valores para ambos atributos e países
+    float Pais1Escolha1 = obterValor(pais1, escolha1, densidadePopulacional1, pibPerCapita1);
+    float Pais2Escolha1 = obterValor(pais2, escolha1, densidadePopulacional2, pibPerCapita2);
+    float Pais1Escolha2 = obterValor(pais1, escolha2, densidadePopulacional1, pibPerCapita1);
+    float Pais2Escolha2 = obterValor(pais2, escolha2, densidadePopulacional2, pibPerCapita2);
+
+    // Mostrar os valores
     printf("\n--- Comparando ---\n");
     printf("Pais 1: %s", pais1.estado);
-    printf("Pais 2: %s ", pais2.estado);
+    printf("Pais 2: %s", pais2.estado);
 
-    switch (escolha) {
-        case 1:
-            printf("Populacao - Pais 1: %d, Pais 2: %d\n", pais1.populacao, pais2.populacao);
-            if (pais1.populacao > pais2.populacao)
-                printf("Resultado: Pais 1 venceu!\n");
-            else if (pais1.populacao < pais2.populacao)
-                printf("Resultado: Pais 2 venceu!\n");
-            else
-                printf("Resultado: Empate!\n");
-            break;
-
-        case 2:
-            printf("Area - Pais 1: %.2f, Pais 2: %.2f\n", pais1.area, pais2.area);
-            if (pais1.area > pais2.area)
-                printf("Resultado: Pais 1 venceu!\n");
-            else if (pais1.area < pais2.area)
-                printf("Resultado: Pais 2 venceu!\n");
-            else
-                printf("Resultado: Empate!\n");
-            break;
-
-        case 3:
-            printf("PIB - Pais 1: %.2f, Pais 2: %.2f\n", pais1.pib, pais2.pib);
-            if (pais1.pib > pais2.pib)
-                printf("Resultado: Pais 1 venceu!\n");
-            else if (pais1.pib < pais2.pib)
-                printf("Resultado: Pais 2 venceu!\n");
-            else
-                printf("Resultado: Empate!\n");
-            break;
-
-        case 4:
-            printf("Pontos Turisticos - Pais 1: %d, Pais 2: %d\n", pais1.pontosTuristicos, pais2.pontosTuristicos);
-            if (pais1.pontosTuristicos > pais2.pontosTuristicos)
-                printf("Resultado: Pais 1 venceu!\n");
-            else if (pais1.pontosTuristicos < pais2.pontosTuristicos)
-                printf("Resultado: Pais 2 venceu!\n");
-            else
-                printf("Resultado: Empate!\n");
-            break;
-
-        case 5:
-            printf("Densidade Demografica - Pais 1: %.2f, Pais 2: %.2f\n", densidadePopulacional1, densidadePopulacional2);
-            if (densidadePopulacional1 < densidadePopulacional2)
-                printf("Resultado: Pais 1 venceu! (Menor densidade)\n");
-            else if (densidadePopulacional1 > densidadePopulacional2)
-                printf("Resultado: Pais 2 venceu! (Menor densidade)\n");
-            else
-                printf("Resultado: Empate!\n");
-            break;
-
-        default:
-            printf("Opcao invalida!\n");
-            break;
+    // Função para imprimir nome do atributo
+    char* nomeAtributo(int id) {
+        switch(id) {
+            case 1: return "Populacao";
+            case 2: return "Area";
+            case 3: return "PIB";
+            case 4: return "Pontos Turisticos";
+            case 5: return "Densidade Demografica";
+            default: return "Desconhecido";
+        }
     }
+
+    printf("\nAtributo 1 - %s: %.2f (Pais 1) vs %.2f (Pais 2)\n", nomeAtributo(escolha1), Pais1Escolha1, Pais2Escolha1);
+    printf("Atributo 2 - %s: %.2f (Pais 1) vs %.2f (Pais 2)\n", nomeAtributo(escolha2), Pais1Escolha2, Pais2Escolha2);
+
+    // Comparação individual (informativa)
+    int pontos1 = 0, pontos2 = 0;
+    if (escolha1 == 5) {
+        if (Pais1Escolha1 < Pais2Escolha1) pontos1++;
+        else if (Pais1Escolha1 > Pais2Escolha1) pontos2++;
+    } else {
+        if (Pais1Escolha1 > Pais2Escolha1) pontos1++;
+        else if (Pais1Escolha1 < Pais2Escolha1) pontos2++;
+    }
+
+    if (escolha2 == 5) {
+        if (Pais1Escolha2 < Pais2Escolha2) pontos1++;
+        else if (Pais1Escolha2 > Pais2Escolha2) pontos2++;
+    } else {
+        if (Pais1Escolha2 > Pais2Escolha2) pontos1++;
+        else if (Pais1Escolha2 < Pais2Escolha2) pontos2++;
+    }
+
+    // Soma dos valores para decisão final
+    float soma1 = Pais1Escolha1 + Pais1Escolha2;
+    float soma2 = Pais2Escolha1 + Pais2Escolha2;
+
+    printf("\n--- Resultado Final ---\n");
+    printf("Soma dos Atributos - Pais 1: %.2f\n", soma1);
+    printf("Soma dos Atributos - Pais 2: %.2f\n", soma2);
+
+    if (soma1 > soma2)
+        printf("Vencedor: Pais 1 (%s)\n", pais1.estado);
+    else if (soma1 < soma2)
+        printf("Vencedor: Pais 2 (%s)\n", pais2.estado);
+    else
+        printf("Empate!\n");
 
     return 0;
 }
